@@ -15,6 +15,17 @@ This is a beginner-friendly proof-of-concept project for an AI-powered QA co-tes
 2. Run `npm.cmd install`.
 3. Run `npm.cmd start`.
 
+## Demo checklist
+
+- [ ] Open project folder in terminal
+- [ ] Install dependencies with `npm.cmd install`
+- [ ] Start the app with `npm.cmd start`
+- [ ] Choose a sample story or paste custom requirements
+- [ ] Review and approve or edit assumptions
+- [ ] Confirm final draft generation and save output
+- [ ] Optionally revise requirements and generate an updated package
+- [ ] Share saved output files from `output/`
+
 ## Deliverables
 
 - `docs/demo.md` — working agent demo instructions
@@ -23,6 +34,7 @@ This is a beginner-friendly proof-of-concept project for an AI-powered QA co-tes
 - `docs/qa-output-package.md` — generated QA package contents
 - `docs/impact-note.md` — effort savings, risks, and production requirements
 - `docs/guardrails.md` — constraints and human-in-the-loop guardrails
+- `docs/revision-checkpoint.md` — requirement change flow and prior rationale preservation
 
 ## PoC focus areas
 

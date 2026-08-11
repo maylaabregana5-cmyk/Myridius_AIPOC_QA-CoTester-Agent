@@ -16,6 +16,15 @@ function formatWorkPackageText(workPackage) {
   workPackage.assumptions.forEach((item, index) => {
     lines.push(`${index + 1}. ${item}`);
   });
+  if (workPackage.previousRationale) {
+    lines.push('\nPrevious Rationale:');
+    lines.push(`Story source: ${workPackage.previousRationale.storyName || 'previous input'}`);
+    lines.push(`Summary: ${workPackage.previousRationale.summary}`);
+    lines.push('Assumptions:');
+    workPackage.previousRationale.assumptions.forEach((item, index) => {
+      lines.push(`  ${index + 1}. ${item}`);
+    });
+  }
   lines.push('\nBDD Scenarios:');
   workPackage.bddScenarios.forEach((scenario, index) => {
     lines.push(`\nScenario ${index + 1}: ${scenario.title}`);
@@ -24,6 +33,23 @@ function formatWorkPackageText(workPackage) {
   lines.push('\nTest Cases:');
   workPackage.testCases.forEach((tc) => {
     lines.push(`\n- ${tc.type}: ${tc.description}`);
+  });
+  lines.push('\nCoverage Matrix:');
+  workPackage.coverageMatrix.forEach((row) => {
+    lines.push(`\n- Requirement: ${row.requirement}`);
+    lines.push(`  Test Case: ${row.testCase}`);
+    lines.push(`  Category: ${row.category}`);
+    lines.push(`  Coverage: ${row.coverage}`);
+  });
+  lines.push('\nExploratory Charter:');
+  lines.push(`Mission: ${workPackage.exploratoryCharter.mission}`);
+  lines.push('Focus Areas:');
+  workPackage.exploratoryCharter.focusAreas.forEach((area) => {
+    lines.push(`  - ${area}`);
+  });
+  lines.push('Success Criteria:');
+  workPackage.exploratoryCharter.successCriteria.forEach((criteria) => {
+    lines.push(`  - ${criteria}`);
   });
   lines.push('\nSynthetic Data Samples:');
   workPackage.syntheticData.forEach((record, index) => {
@@ -53,6 +79,25 @@ function saveWorkPackage(workPackage) {
   fs.writeFileSync(jsonPath, JSON.stringify(workPackage, null, 2), 'utf8');
 
   return { textPath, jsonPath };
+}
+
+function loadContext() {
+  const contextPath = path.join(__dirname, '..', 'output', 'context.json');
+  if (fs.existsSync(contextPath)) {
+    try {
+      return JSON.parse(fs.readFileSync(contextPath, 'utf8'));
+    } catch (error) {
+      return null;
+    }
+  }
+  return null;
+}
+
+function saveContext(context) {
+  const outputDir = path.join(__dirname, '..', 'output');
+  fs.mkdirSync(outputDir, { recursive: true });
+  const contextPath = path.join(outputDir, 'context.json');
+  fs.writeFileSync(contextPath, JSON.stringify(context, null, 2), 'utf8');
 }
 
 async function runDemo() {
@@ -182,9 +227,61 @@ async function runDemo() {
   });
 
   const savedFiles = saveWorkPackage(workPackage);
+  saveContext({
+    storyName: input.name || 'custom',
+    storyText: input.story,
+    summary: workPackage.summary,
+    assumptions: workPackage.assumptions,
+    generatedAt: new Date().toISOString(),
+  });
+
   console.log(chalk.blue(`\nSaved output to:`));
   console.log(chalk.green(`  ${savedFiles.textPath}`));
   console.log(chalk.green(`  ${savedFiles.jsonPath}`));
+
+  const { revise } = await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'revise',
+      message: 'Would you like to revise the requirement and generate an updated package?',
+      default: false,
+    },
+  ]);
+
+  if (revise) {
+    const { updatedStory } = await inquirer.prompt([
+      {
+        type: 'editor',
+        name: 'updatedStory',
+        message: 'Paste the revised user story, acceptance criteria, or UI/API notes:',
+        default: input.story,
+      },
+    ]);
+
+    const updatedInput = { story: updatedStory };
+    const updatedWorkPackage = createWorkPackage(updatedInput);
+    updatedWorkPackage.previousRationale = {
+      storyName: input.name || 'custom',
+      summary: workPackage.summary,
+      assumptions: workPackage.assumptions,
+    };
+
+    const updatedFiles = saveWorkPackage(updatedWorkPackage);
+    saveContext({
+      storyName: updatedInput.name || 'custom',
+      storyText: updatedInput.story,
+      summary: updatedWorkPackage.summary,
+      assumptions: updatedWorkPackage.assumptions,
+      previousRationale: updatedWorkPackage.previousRationale,
+      generatedAt: new Date().toISOString(),
+    });
+
+    console.log(chalk.blue('\n=== Updated QA Work Package ===\n'));
+    console.log(chalk.yellow('Previous rationale preserved in the updated package.'));
+    console.log(chalk.blue(`\nSaved updated output to:`));
+    console.log(chalk.green(`  ${updatedFiles.textPath}`));
+    console.log(chalk.green(`  ${updatedFiles.jsonPath}`));
+  }
 
   console.log(chalk.blue('\nDemo complete. AI output is draft and requires tester review.\n'));
 }

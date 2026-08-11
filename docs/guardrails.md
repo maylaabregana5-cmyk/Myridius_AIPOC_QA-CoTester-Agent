@@ -20,6 +20,9 @@ Document the safety and human-in-the-loop guardrails for the QA Co-Tester PoC.
   - Checkpoint 2: confirm whether to proceed with final draft generation and file saving.
 - **Assumption correction flow**
   - If the tester does not approve the assumptions, they can edit them directly in the demo.
+- **Revision checkpoint**
+  - After the first draft is generated, the tester can choose to revise the requirement.
+  - The updated package preserves the previous rationale and approved assumptions.
 
 ## Remaining limitations
 

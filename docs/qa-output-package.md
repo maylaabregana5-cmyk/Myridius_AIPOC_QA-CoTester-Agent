@@ -16,6 +16,8 @@ The generated QA package includes:
   - requirement-to-test mapping for key acceptance criteria.
 - **Exploratory charter**
   - mission, focus areas, and success criteria for exploratory testing.
+- **Previous rationale**
+  - preserved summary and assumptions from the prior requirement version when a revision occurs.
 - **Synthetic data set**
   - 20 records covering valid, invalid, edge, boundary, and mutation-path test data.
 - **Automation triage**
