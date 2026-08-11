@@ -39,6 +39,7 @@ This is a beginner-friendly proof-of-concept project for an AI-powered QA co-tes
 - `docs/executive-summary.md` — concise handoff summary for stakeholders
 - `docs/qa-handoff.md` — QA-friendly handoff and output checklist
 - `docs/video-script-highlights.md` — short intro and closing highlights for recorded demo
+- `docs/submission-overview.md` — comprehensive proof-of-concept submission overview
 
 ## PoC focus areas
 
