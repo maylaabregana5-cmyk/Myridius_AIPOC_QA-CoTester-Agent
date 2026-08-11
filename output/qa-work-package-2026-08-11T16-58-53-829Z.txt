@@ -1,0 +1,237 @@
+=== Draft QA Work Package ===
+
+Summary:
+Draft summary: As a user, I want to register for an account so that I can access premium content.
+
+Assumptions & Clarifications:
+1. No major ambiguity detected in draft input; verify all acceptance criteria are complete.
+
+BDD Scenarios:
+
+Scenario 1: Create account with valid data
+Given a new user with valid registration details
+When the user submits the registration form
+Then the account is created and a confirmation message appears.
+
+Scenario 2: Attempt registration with invalid email
+Given a new user with an improperly formatted email address
+When the user submits the registration form
+Then validation rejects the email and shows an error message.
+
+Scenario 3: Register with missing required fields
+Given a new user with missing required fields
+When the user submits the registration form
+Then the submission is blocked and required field errors are displayed.
+
+Scenario 4: Duplicate account prevention
+Given an email address already registered
+When the user attempts to register again
+Then the system prevents duplicate accounts and prompts the user appropriately.
+
+Scenario 5: Password boundary validation
+Given a password shorter than the minimum length
+When the user enters the password
+Then the system shows a password length validation message.
+
+Scenario 6: User sees success notification
+Given a successful registration submission
+When the account is created
+Then the user sees a success notification and next steps guidance.
+
+Test Cases:
+
+- Functional: Register with valid data and verify account creation.
+
+- Functional: Verify error messages for invalid email format.
+
+- Negative: Ensure missing required fields prevent registration.
+
+- Boundary: Check password minimum length and maximum length validation.
+
+- Regression: Confirm previously fixed duplicate registration bug remains resolved.
+
+- Compatibility: Validate registration form behavior on desktop and mobile browsers.
+
+- Exploratory: Explore edge cases around optional fields and UI error handling.
+
+- Accessibility: Verify screen reader labels and keyboard navigation on registration form.
+
+- API: Validate backend registration API response codes for valid and invalid payloads.
+
+- Security: Check that password fields are masked and not returned in API responses.
+
+- Data: Ensure unique email constraint is enforced by the system.
+
+- Usability: Confirm success guidance is clear after account creation.
+
+Synthetic Data Samples:
+
+Record 1:
+  email: "test.user+valid@example.com"
+  password: "Passw0rd!"
+  firstName: "Test"
+  lastName: "User"
+  age: 30
+
+Record 2:
+  email: "test.user+invalidemail.com"
+  password: "Passw0rd!"
+  firstName: "Test"
+  lastName: "User"
+  age: 30
+
+Record 3:
+  email: "test.user+missing@example.com"
+  password: ""
+  firstName: "Test"
+  lastName: "User"
+  age: 30
+
+Record 4:
+  email: "test.user+shortpass@example.com"
+  password: "P@1"
+  firstName: "Test"
+  lastName: "User"
+  age: 30
+
+Record 5:
+  email: "test.user+longname@example.com"
+  password: "Passw0rd!"
+  firstName: "ThisNameIsWayTooLongToBeValidInSomeForms"
+  lastName: "User"
+  age: 30
+
+Record 6:
+  email: "test.user+edge@example.com"
+  password: "Passw0rd!"
+  firstName: "Test"
+  lastName: "User"
+  age: 120
+
+Record 7:
+  email: "test.user+boundary@example.com"
+  password: "Passw0rd!"
+  firstName: "T"
+  lastName: "U"
+  age: 0
+
+Record 8:
+  email: "test.user+special@example.com"
+  password: "P@$$w0rd!"
+  firstName: "Test"
+  lastName: "User"
+  age: 25
+
+Record 9:
+  email: "test.user+spaces@example.com"
+  password: "Passw0rd!"
+  firstName: "Test User"
+  lastName: "Example"
+  age: 35
+
+Record 10:
+  email: "test.user+unicode@example.com"
+  password: "Passw0rd!"
+  firstName: "Tést"
+  lastName: "Üser"
+  age: 28
+
+Record 11:
+  email: "test.user+invalid@.com"
+  password: "Passw0rd!"
+  firstName: "Test"
+  lastName: "User"
+  age: 30
+
+Record 12:
+  email: "test.user+toolong@example.com"
+  password: "Passw0rd!"
+  firstName: "Test"
+  lastName: "User"
+  age: 30
+
+Record 13:
+  email: "test.user+missingat.com"
+  password: "Passw0rd!"
+  firstName: "Test"
+  lastName: "User"
+  age: 30
+
+Record 14:
+  email: "test.user+null@example.com"
+  password: null
+  firstName: "Test"
+  lastName: "User"
+  age: 30
+
+Record 15:
+  email: "test.user+boundary2@example.com"
+  password: "A1b2C3d4"
+  firstName: ""
+  lastName: "User"
+  age: 30
+
+Record 16:
+  email: "test.user+capital@example.com"
+  password: "Passw0rd!"
+  firstName: "TEST"
+  lastName: "USER"
+  age: 30
+
+Record 17:
+  email: "test.user+repeat@example.com"
+  password: "Passw0rd!"
+  firstName: "Test"
+  lastName: "User"
+  age: -1
+
+Record 18:
+  email: "test.user+spaces2@example.com"
+  password: "Pass w0rd!"
+  firstName: "Test"
+  lastName: "User"
+  age: 30
+
+Record 19:
+  email: "test.user+json@example.com"
+  password: "Passw0rd!"
+  firstName: "Test"
+  lastName: "User"
+  age: 30
+  note: "<script>alert(1)</script>"
+
+Record 20:
+  email: "test.user+maxlen@example.com"
+  password: "Passw0rd!"
+  firstName: "Test"
+  lastName: "User"
+  age: 30
+  extraField: "Extra"
+
+Automation Triage:
+
+- Register with valid data and verify account creation.: Suitable for automation if stable and repeatable.
+
+- Verify error messages for invalid email format.: Suitable for automation if stable and repeatable.
+
+- Ensure missing required fields prevent registration.: Manual or exploratory review
+
+- Check password minimum length and maximum length validation.: Manual or exploratory review
+
+- Confirm previously fixed duplicate registration bug remains resolved.: Suitable for automation if stable and repeatable.
+
+- Validate registration form behavior on desktop and mobile browsers.: Manual or exploratory review
+
+- Explore edge cases around optional fields and UI error handling.: Best as manual exploratory testing, supported by automation checks where possible.
+
+- Verify screen reader labels and keyboard navigation on registration form.: Best as manual exploratory testing, supported by automation checks where possible.
+
+- Validate backend registration API response codes for valid and invalid payloads.: Suitable for automation if stable and repeatable.
+
+- Check that password fields are masked and not returned in API responses.: Suitable for automation if stable and repeatable.
+
+- Ensure unique email constraint is enforced by the system.: Manual or exploratory review
+
+- Confirm success guidance is clear after account creation.: Best as manual exploratory testing, supported by automation checks where possible.
+
+Demo complete. AI output is draft and requires tester review.

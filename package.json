@@ -1,0 +1,25 @@
+{
+  "name": "aipoc-qa-cotester-agent",
+  "version": "0.1.0",
+  "description": "Proof-of-concept QA Co-Tester Agent for user story analysis, BDD generation, synthetic data, and automation triage.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "demo": "node src/index.js",
+    "lint": "npx eslint . --ext .js",
+    "format": "npx prettier --check .",
+    "clean": "rimraf node_modules"
+  },
+  "keywords": ["qa","cotester","poc","ai","test-design","bdd"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "inquirer": "^9.2.10"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "prettier": "^3.9.6",
+    "rimraf": "^5.0.1"
+  }
+}
