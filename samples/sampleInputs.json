@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Account registration",
+    "story": "As a user, I want to register for an account so that I can access premium content.\n\nAcceptance Criteria:\n1. The registration form accepts first name, last name, email, password, and optional newsletter opt-in.\n2. The email must be unique and in a valid format.\n3. The password must be at least 8 characters, contain letters and numbers, and be masked on screen.\n4. Required fields must display a validation error if empty.\n5. Successful registration shows a confirmation message and next step guidance.\n\nUI Notes:\n- Desktop and mobile responsive form.\n- Accessible labels and keyboard navigation.\n\nAPI Notes:\n- POST /api/register returns 201 on success and 400 on invalid payload.\n"
+  },
+  {
+    "name": "Password reset workflow",
+    "story": "As a returning user, I want to reset my password so that I can regain access to my account.\n\nAcceptance Criteria:\n1. The password reset flow accepts a registered email address.\n2. A password reset link is sent to the email with a limited validity period.\n3. The reset page requires a new password and confirmation.\n4. Password complexity rules are enforced and errors are shown for weak passwords.\n5. A successful reset redirects the user to a confirmation page.\n\nUI Notes:\n- The reset flow should support desktop and mobile layouts.\n- The password fields should be masked and show strength hints.\n\nAPI Notes:\n- POST /api/password-reset/request returns 200 for valid requests and 404 for unknown emails.\n- POST /api/password-reset/confirm returns 200 on success and 400 for invalid tokens.\n"
+  },
+  {
+    "name": "Checkout payment defect",
+    "story": "As a shopper, I want to complete checkout securely so that I can purchase items without payment failures.\n\nAcceptance Criteria:\n1. The checkout page accepts card number, expiry date, CVV, and billing address.\n2. Invalid CVV entries show a clear validation error.\n3. Declined payments surface a retry or alternate payment option.\n4. Successful payment shows an order confirmation and email receipt.\n5. Payment retry attempts do not duplicate orders.\n\nUI Notes:\n- Payment form validation should be inline and accessible.\n- The page should support screen readers and keyboard navigation.\n\nAPI Notes:\n- POST /api/payments returns 201 on success and 402 for declined payments.\n"
+  },
+  {
+    "name": "Search filter experience",
+    "story": "As a customer, I want to search products with filters so that I can find relevant items quickly.\n\nAcceptance Criteria:\n1. The search input supports partial matches and keywords.\n2. Filters for category, price, and rating can be applied and cleared.\n3. The results update in real time without a full page refresh.\n4. No results display a helpful message with suggested alternatives.\n5. The search is accessible to keyboard and screen reader users.\n\nUI Notes:\n- Filter panel should collapse on mobile viewports.\n- Active filters should be clearly visible and removable.\n\nAPI Notes:\n- GET /api/products?query=...&category=... returns matching products and supports pagination.\n"
+  }
+]

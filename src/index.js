@@ -5,7 +5,7 @@ const inquirer = inquirerModule.default || inquirerModule;
 const chalkModule = require('chalk');
 const chalk = chalkModule.default || chalkModule;
 const { createWorkPackage } = require('./qaAgent');
-const sample = require('../samples/sampleInput.json');
+const samples = require('../samples/sampleInputs.json');
 
 function formatWorkPackageText(workPackage) {
   const lines = [];
@@ -63,18 +63,32 @@ async function runDemo() {
     {
       type: 'confirm',
       name: 'useSample',
-      message: 'Use the included sample user story? (recommended)',
+      message: 'Use an included sample user story? (recommended)',
       default: true,
     },
   ]);
 
-  const input = useSample ? sample : await inquirer.prompt([
-    {
-      type: 'editor',
-      name: 'story',
-      message: 'Paste the user story, acceptance criteria, and UI/API notes:',
-    },
-  ]);
+  let input;
+  if (useSample) {
+    const { selectedSample } = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'selectedSample',
+        message: 'Choose a sample user story:',
+        choices: samples.map((item) => item.name),
+      },
+    ]);
+    input = samples.find((item) => item.name === selectedSample);
+  } else {
+    const result = await inquirer.prompt([
+      {
+        type: 'editor',
+        name: 'story',
+        message: 'Paste the user story, acceptance criteria, and UI/API notes:',
+      },
+    ]);
+    input = { story: result.story };
+  }
 
   const workPackage = createWorkPackage(input);
 
