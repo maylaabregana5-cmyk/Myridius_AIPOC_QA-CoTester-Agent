@@ -92,7 +92,7 @@ async function runDemo() {
 
   const workPackage = createWorkPackage(input);
 
-  console.log(chalk.green('\n=== Draft QA Work Package ===\n'));
+  console.log(chalk.green('\n=== Draft Summary and Assumptions ===\n'));
   console.log(chalk.yellow('Summary:'));
   console.log(workPackage.summary);
 
@@ -100,6 +100,45 @@ async function runDemo() {
   workPackage.assumptions.forEach((item, index) => {
     console.log(`${index + 1}. ${item}`);
   });
+
+  const { assumptionsApproved } = await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'assumptionsApproved',
+      message: 'Do you approve these assumptions as correct for the draft output?',
+      default: true,
+    },
+  ]);
+
+  if (!assumptionsApproved) {
+    const { editedAssumptions } = await inquirer.prompt([
+      {
+        type: 'editor',
+        name: 'editedAssumptions',
+        message: 'Edit the assumptions. Use one assumption per line:',
+        default: workPackage.assumptions.join('\n'),
+      },
+    ]);
+    workPackage.assumptions = editedAssumptions
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean);
+    console.log(chalk.green('\nAssumptions updated and approved.\n'));
+  }
+
+  const { proceed } = await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'proceed',
+      message: 'Proceed to generate the final draft QA work package with the approved assumptions?',
+      default: true,
+    },
+  ]);
+
+  if (!proceed) {
+    console.log(chalk.red('\nDemo stopped before final generation. No output file was created.'));
+    process.exit(0);
+  }
 
   console.log(chalk.yellow('\nBDD Scenarios:'));
   workPackage.bddScenarios.forEach((scenario, index) => {

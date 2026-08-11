@@ -16,7 +16,9 @@ Show a repeatable PoC run of the QA Co-Tester Agent using a realistic user story
 ## What happens
 
 - The app prompts for sample input.
-- It uses `samples/sampleInput.json` by default.
+- It uses `samples/sampleInputs.json` by default.
+- The agent generates a draft summary and assumptions.
+- The tester must approve or edit assumptions before final generation.
 - The agent generates a draft QA work package in the terminal.
 - It saves the package to `output/qa-work-package-<timestamp>.txt` and `.json`.
 

@@ -17,6 +17,7 @@ The current PoC detects draft assumptions from the story text:
 The prototype simulates a clarification loop by:
 - asking whether to use the sample story or provide custom requirements
 - showing assumptions that the tester should verify
+- requiring explicit tester approval of assumptions before final output generation
 
 ## Hallucination checks
 

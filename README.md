@@ -22,6 +22,7 @@ This is a beginner-friendly proof-of-concept project for an AI-powered QA co-tes
 - `docs/prompt-log.md` — prompts, assumptions, and guardrail notes
 - `docs/qa-output-package.md` — generated QA package contents
 - `docs/impact-note.md` — effort savings, risks, and production requirements
+- `docs/guardrails.md` — constraints and human-in-the-loop guardrails
 
 ## PoC focus areas
 
