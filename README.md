@@ -35,6 +35,10 @@ This is a beginner-friendly proof-of-concept project for an AI-powered QA co-tes
 - `docs/impact-note.md` — effort savings, risks, and production requirements
 - `docs/guardrails.md` — constraints and human-in-the-loop guardrails
 - `docs/revision-checkpoint.md` — requirement change flow and prior rationale preservation
+- `docs/demo-script.md` — step-by-step PoC demo script
+- `docs/executive-summary.md` — concise handoff summary for stakeholders
+- `docs/qa-handoff.md` — QA-friendly handoff and output checklist
+- `docs/video-script-highlights.md` — short intro and closing highlights for recorded demo
 
 ## PoC focus areas
 
