@@ -1,13 +1,17 @@
 function createWorkPackage(input) {
   const storyText = typeof input === 'string' ? input : input.story || '';
 
+  const testCases = generateTestCases();
+
   return {
     summary: summarizeStory(storyText),
     assumptions: detectAssumptions(storyText),
     bddScenarios: generateBdd(),
-    testCases: generateTestCases(),
+    testCases,
+    coverageMatrix: generateCoverageMatrix(),
+    exploratoryCharter: generateExploratoryCharter(),
     syntheticData: generateSyntheticData(),
-    automationTriage: recommendAutomation(generateTestCases()),
+    automationTriage: recommendAutomation(testCases),
   };
 }
 
@@ -102,6 +106,34 @@ function generateSyntheticData() {
     { email: 'test.user+json@example.com', password: 'Passw0rd!', firstName: 'Test', lastName: 'User', age: 30, note: '<script>alert(1)</script>' },
     { email: 'test.user+maxlen@example.com', password: 'Passw0rd!', firstName: 'Test', lastName: 'User', age: 30, extraField: 'Extra' },
   ];
+}
+
+function generateCoverageMatrix() {
+  return [
+    { requirement: 'Email must be unique and valid', testCase: 'Verify error messages for invalid email format.', category: 'Functional', coverage: 'High' },
+    { requirement: 'Password must be at least 8 characters and contain letters and numbers', testCase: 'Check password minimum length and maximum length validation.', category: 'Boundary', coverage: 'High' },
+    { requirement: 'Required fields must display validation errors', testCase: 'Ensure missing required fields prevent registration.', category: 'Negative', coverage: 'High' },
+    { requirement: 'Form shows confirmation and next step guidance', testCase: 'Register with valid data and verify account creation.', category: 'Functional', coverage: 'High' },
+    { requirement: 'Accessible labels and keyboard navigation', testCase: 'Verify screen reader labels and keyboard navigation on registration form.', category: 'Accessibility', coverage: 'Medium' },
+    { requirement: 'Backend returns 201 on success and 400 on invalid payload', testCase: 'Validate backend registration API response codes for valid and invalid payloads.', category: 'API', coverage: 'Medium' },
+  ];
+}
+
+function generateExploratoryCharter() {
+  return {
+    mission: 'Explore edge cases, UI behavior, and validation flows for the registration process.',
+    focusAreas: [
+      'Optional newsletter opt-in flows',
+      'Error message handling and display across desktop/mobile',
+      'Duplicate email and account creation edge cases',
+      'Accessibility keyboard navigation and screen reader behavior',
+    ],
+    successCriteria: [
+      'Identify any missing acceptance criteria or ambiguous requirements',
+      'Capture unexpected validation or UX behavior',
+      'Document areas that are better suited for exploratory testing than automation',
+    ],
+  };
 }
 
 function recommendAutomation(testCases) {

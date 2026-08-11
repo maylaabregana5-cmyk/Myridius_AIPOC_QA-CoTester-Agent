@@ -98,6 +98,25 @@ async function runDemo() {
     console.log(`\n- ${tc.type}: ${tc.description}`);
   });
 
+  console.log(chalk.yellow('\nCoverage Matrix:'));
+  workPackage.coverageMatrix.forEach((row) => {
+    console.log(`\n- Requirement: ${row.requirement}`);
+    console.log(`  Test Case: ${row.testCase}`);
+    console.log(`  Category: ${row.category}`);
+    console.log(`  Coverage: ${row.coverage}`);
+  });
+
+  console.log(chalk.yellow('\nExploratory Charter:'));
+  console.log(`Mission: ${workPackage.exploratoryCharter.mission}`);
+  console.log('Focus Areas:');
+  workPackage.exploratoryCharter.focusAreas.forEach((area) => {
+    console.log(`  - ${area}`);
+  });
+  console.log('Success Criteria:');
+  workPackage.exploratoryCharter.successCriteria.forEach((criteria) => {
+    console.log(`  - ${criteria}`);
+  });
+
   console.log(chalk.yellow('\nSynthetic Data Samples:'));
   workPackage.syntheticData.slice(0, 10).forEach((record, index) => {
     console.log(`\nRecord ${index + 1}:`);

@@ -15,6 +15,14 @@ This is a beginner-friendly proof-of-concept project for an AI-powered QA co-tes
 2. Run `npm.cmd install`.
 3. Run `npm.cmd start`.
 
+## Deliverables
+
+- `docs/demo.md` — working agent demo instructions
+- `docs/architecture.md` — architecture and conceptual design
+- `docs/prompt-log.md` — prompts, assumptions, and guardrail notes
+- `docs/qa-output-package.md` — generated QA package contents
+- `docs/impact-note.md` — effort savings, risks, and production requirements
+
 ## PoC focus areas
 
 - Draft requirement summary and assumption detection
